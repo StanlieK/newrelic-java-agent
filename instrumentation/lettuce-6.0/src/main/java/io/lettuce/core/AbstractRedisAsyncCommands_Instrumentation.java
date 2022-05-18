@@ -4,6 +4,7 @@ import com.newrelic.api.agent.DatastoreParameters;
 import com.newrelic.api.agent.NewRelic;
 import com.newrelic.api.agent.Segment;
 import com.newrelic.api.agent.Trace;
+import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 import com.nr.fit.lettuce.instrumentation.NRBiConsumer;
 
@@ -12,7 +13,8 @@ import io.lettuce.core.protocol.AsyncCommand;
 import io.lettuce.core.protocol.ProtocolKeyword;
 import io.lettuce.core.protocol.RedisCommand;
 
-public abstract class AbstractRedisAsyncCommand<K, V> {
+@Weave(originalName = "io.lettuce.core.AbstractRedisAsyncCommands")
+public abstract class AbstractRedisAsyncCommands_Instrumentation<K, V> {
 
 	public abstract StatefulConnection<K, V> getConnection();
 
@@ -24,8 +26,8 @@ public abstract class AbstractRedisAsyncCommand<K, V> {
 		RedisURI uri = null;
 
 		StatefulConnection<K, V> conn = getConnection();
-		if (StatefulRedisConnectionImpl.class.isInstance(conn)) {
-			StatefulRedisConnectionImpl<K, V> connImpl = (StatefulRedisConnectionImpl<K, V>) conn;
+		if (StatefulRedisConnectionImpl_Instrumentation.class.isInstance(conn)) {
+			StatefulRedisConnectionImpl_Instrumentation<K, V> connImpl = (StatefulRedisConnectionImpl_Instrumentation<K, V>) conn;
 			if (connImpl.redisURI != null) {
 				uri = connImpl.redisURI;
 			}

@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import com.newrelic.api.agent.DatastoreParameters;
+import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 import com.nr.fit.lettuce.instrumentation.NRErrorConsumer;
@@ -18,8 +19,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.SignalType;
 
-@Weave
-public abstract class AbstractRedisReactiveCommands<K, V>
+@Weave(originalName = "io.lettuce.core.AbstractRedisReactiveCommands")
+public abstract class AbstractRedisReactiveCommands_Instrumentation<K, V>
 {
 	private final StatefulConnection<K, V> connection = Weaver.callOriginal();
 
@@ -34,9 +35,9 @@ public abstract class AbstractRedisReactiveCommands<K, V>
 
 			String collName = "?";
 			RedisURI uri = null;
-			if (StatefulRedisConnectionImpl.class.isInstance(connection))
+			if (StatefulRedisConnectionImpl_Instrumentation.class.isInstance(connection))
 			{
-				StatefulRedisConnectionImpl<K, V> connImpl = (StatefulRedisConnectionImpl<K, V>) connection;
+				StatefulRedisConnectionImpl_Instrumentation<K, V> connImpl = (StatefulRedisConnectionImpl_Instrumentation<K, V>) connection;
 				if (connImpl.redisURI != null) {
 					uri = connImpl.redisURI;
 				}
@@ -73,9 +74,9 @@ public abstract class AbstractRedisReactiveCommands<K, V>
 
 			String collName = "?";
 			RedisURI uri = null;
-			if (StatefulRedisConnectionImpl.class.isInstance(connection))
+			if (StatefulRedisConnectionImpl_Instrumentation.class.isInstance(connection))
 			{
-				StatefulRedisConnectionImpl<K, V> connImpl = (StatefulRedisConnectionImpl<K, V>) connection;
+				StatefulRedisConnectionImpl_Instrumentation<K, V> connImpl = (StatefulRedisConnectionImpl_Instrumentation<K, V>) connection;
 				if (connImpl.redisURI != null) {
 					uri = connImpl.redisURI;
 				}

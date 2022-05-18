@@ -6,7 +6,7 @@ dependencies {
 
 jar {
   manifest {
-    attributes 'Implementation-Title': 'com.newrelic.instrumentation.lettuce-5.x'
+    attributes 'Implementation-Title': 'com.newrelic.instrumentation.lettuce-5.0'
   }
 }
 
@@ -16,6 +16,6 @@ verifyInstrumentation {
 }
 
 site {
-    title 'Lettuce 5.x'
+    title 'Lettuce 5.0'
     type 'Framework'
 }
